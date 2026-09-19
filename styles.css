@@ -229,7 +229,11 @@ html, body {
 }
 
 /* cambia estos fondos por tus propias imágenes */
-#room-listening .room-scene { background-image: url("fondo-listening.jpg"); }
+#room-listening .room-scene {
+  background-image: url("grabacionwowo.jpeg");
+  background-size: 118%;
+  background-position: center;
+}
 #room-photo .room-scene { background-image: url("fondo-photo.jpg"); }
 #room-speak .room-scene { background-image: url("fondo-speak.jpg"); }
 
