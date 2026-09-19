@@ -1,0 +1,545 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow: hidden;
+  background-color: #1b1a2e;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+/* ---------- HUB ---------- */
+
+#hub-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  color: #ffffff;
+  text-align: center;
+  background-image: url(FONDOO.jpg);
+  background-size: cover;
+}
+
+#hub-screen h1 {
+  font-family: "Caveat", cursive;
+  font-size: 4rem;
+  background-color: #8686865f;
+  border-radius: 25px;
+}
+
+#hub-screen p {
+  font-size: 1rem;
+  background-color: #555555c5;
+  border-radius: 25px;
+}
+
+.hub-hint {
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+#dpad {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px);
+  gap: 0.5rem;
+  place-items: center;
+  z-index: 2;
+}
+
+.dpad-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.dpad-btn:hover:not(:disabled) {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.dpad-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dpad-shape {
+  font-size: 1.6rem;
+}
+
+.dpad-shape-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background-color: #71717182;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+#btn-listening .dpad-shape-img {
+  margin-top: -22px;
+}
+
+#btn-photo .dpad-shape-img {
+  margin-top: 8px;
+}
+
+#btn-speak .dpad-shape-img {
+  margin-top: 25px;
+}
+
+#btn-circle .dpad-shape-img {
+  margin-top: 20px;
+}
+
+#btn-listening .dpad-label {
+  margin-top: -8px;
+}
+
+.dpad-label {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+}
+
+/* posiciones tipo D-pad: arriba, izq, der, abajo */
+#btn-listening { grid-column: 2; grid-row: 1; } /* △*/
+#btn-photo     { grid-column: 1; grid-row: 2; } /* □ */
+#btn-circle    { grid-column: 3; grid-row: 2; } /* ○*/
+#btn-speak     { grid-column: 2; grid-row: 3; }/* ✕ */
+
+#inventory {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 2;
+  background-color: #5d5d5d7d;
+}
+
+.inv-slot {
+  width: 55px;
+  height: 55px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.inv-slot.found {
+  border-style: solid;
+  border-color: #e8c56b;
+  color: #e8c56b;
+  background: rgba(232, 197, 107, 0.1);
+}
+
+/* ---------- HABITACIONES ---------- */
+
+.room {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  color: #ffffff;
+  text-align: center;
+  padding: 2rem;
+  background-color: #23213b;
+  transition: left 0.5s ease;
+  z-index: 5;
+}
+
+.room.active {
+  left: 0;
+}
+
+.back-btn {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.back-btn:hover {
+  opacity: 1;
+}
+
+.room-title {
+  font-family: "Caveat", cursive;
+  font-size: 3rem;
+}
+
+.room-scene {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#room-photo .room-scene {
+  width: 100%;
+  height: 140px;
+  background-color: transparent;
+  background-image: none;
+  border-radius: 0;
+}
+
+#room-speak .room-scene {
+  width: 360px;
+  height: 350px;
+}
+
+/* cambia estos fondos por tus propias imágenes */
+#room-listening .room-scene { background-image: url("fondo-listening.jpg"); }
+#room-photo .room-scene { background-image: url("fondo-photo.jpg"); }
+#room-speak .room-scene { background-image: url("fondo-speak.jpg"); }
+
+#room-listening {
+  background-image: url("KARAOKE.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+#room-photo {
+  background-image: url("fondophotoahorasi.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+#room-speak {
+  background-image: url("fondospeak.jpg");
+  background-size: auto;
+  background-position: right;
+}
+
+#room-circle {
+  background-image: url("fondophoto.jpg");
+  background-size: cover;
+  background-position: right;
+}
+
+#final-screen{
+  background-image: url("fondofinal.jpg");
+  background-size: cover;
+  background-position: right;
+}
+
+.room-photo-img {
+  max-width: 60%;
+  max-height: 100%;
+  border-radius: 0px;
+  object-fit: cover;
+}
+
+.hidden-object {
+  position: absolute;
+  top: 70%;
+  left: 60%;
+  font-size: 2rem;
+  cursor: pointer;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+  animation: pulse 1.4s infinite;
+}
+
+.hidden-object-img{
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.hidden-object.collected {
+  display: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.room-caption {
+  font-size: 1.2rem;
+  max-width: 500px;
+}
+
+.room-message {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+#open-door-btn {
+  font-size: 1.1rem;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  background-color: #e8c56b;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#open-door-btn:hover {
+  background-color: #f3d485;
+}
+
+/* ---------- FLASH Y FINAL ---------- */
+
+#white-flash {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.6s ease;
+}
+
+#white-flash.flashing {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#final-screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #1b1a2e;
+  color: #ffffff;
+  text-align: center;
+  z-index: 10;
+}
+
+#final-screen.active {
+  display: flex;
+}
+
+#final-screen h1 {
+  font-size: 4rem;
+  color: #e8c56b;
+}
+
+.final-text {
+  font-family: "Caveat", cursive;
+  font-size: 2.5rem;
+}
+
+.final-subtext {
+  opacity: 0.8;
+}
+
+/* ---------- POPUP INVENTARIO ---------- */
+
+#inventory-popup {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(0, 0, 0, 0.85);
+  color: #e8c56b;
+  border: 1px solid #e8c56b;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 30;
+}
+
+#inventory-popup.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#retro-player {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(#d8c9a3, #c2b088);
+  border: 3px solid #6b5a3a;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+  font-family: "Courier New", monospace;
+}
+
+#retro-player[hidden] {
+  display: none;
+}
+
+.retro-screen {
+  background: #2e3b1f;
+  color: #9fe066;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 110px;
+}
+
+#retro-track-name {
+  display: inline-block;
+  padding-left: 100%;
+  animation: retro-scroll 6s linear infinite;
+}
+
+@keyframes retro-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.retro-reels {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.reel {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(#3a3a3a 30%, #111 31%, #111 40%, #3a3a3a 41%);
+  animation: reel-spin 1.8s linear infinite;
+  animation-play-state: paused;
+}
+
+#retro-player.playing .reel {
+  animation-play-state: running;
+}
+
+@keyframes reel-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#retro-toggle-btn {
+  border: none;
+  background: #6b5a3a;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+#retro-volume {
+  width: 55px;
+  accent-color: #6b5a3a;
+}
+
+#object-player {
+  width: 50%;
+  top: 20%;
+  left: -190%;
+}
+
+#object-listening {
+  width: 30%;
+  top: 125%;
+  left: 250%;
+}
+
+#object-photo {
+  width: 10%;
+  top: 100%;
+  left: -2%;
+}
+
+#object-speak {
+  width: 30%;
+  top: 35%;
+  left: 230%;
+}
+
+.scene-text {
+  position: absolute;
+  top: 10%;
+  color: #ffffff;
+  font-family: "Caveat", cursive;
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 95vw;
+}
+
+.photo-item {
+  flex: 0 0 auto;
+  background: #fefefe;
+  width: 260px;
+  padding: 14px 14px 70px 14px;
+  border-radius: 2px;
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.photo-item img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.photo-item:nth-child(odd) {
+  transform: rotate(-4deg);
+}
+
+.photo-item:nth-child(even) {
+  transform: rotate(3deg);
+}
+
+.photo-item:nth-child(3n) {
+  transform: rotate(-2deg);
+}

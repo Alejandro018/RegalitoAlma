@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>REGALITO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="mariposaa.png">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <!-- HUB: pantalla con los 4 botones tipo D-pad -->
+    <div id="hub-screen">
+      <h1>♡ PARA ALMAAA ♡</h1>
+      <p class="hub-hint">Encuentra los objetos escondidos muejejeje</p>
+
+      <div id="dpad">
+        <button class="dpad-btn" id="btn-listening" data-room="room-listening">
+          <span class="dpad-label">Listen</span>
+          <br>
+          <img class="dpad-shape-img" src="icono-listening.png" alt="Listening">
+        </button>
+        <button class="dpad-btn" id="btn-photo" data-room="room-photo">
+          <img class="dpad-shape-img" src="icono-photo.png" alt="Photo">
+          <span class="dpad-label">Photo</span>
+        </button>
+        <button class="dpad-btn" id="btn-speak" data-room="room-speak">
+          <img class="dpad-shape-img" src="icono-speak.png" alt="Speak">
+          <br>
+          <span class="dpad-label">Speak</span>
+        </button>
+        <button class="dpad-btn" id="btn-circle" data-room="room-circle" disabled>
+          <img class="dpad-shape-img" src="icono-secreto.png" alt="Secreto">
+          <span class="dpad-label">???</span>
+        </button>
+      </div>
+
+      <div id="inventory">
+        <div class="inv-slot" id="inv-listening">?</div>
+        <div class="inv-slot" id="inv-photo">?</div>
+        <div class="inv-slot" id="inv-speak">?</div>
+      </div>
+    </div>
+    
+    <!-- HABITACIÓN: LISTENING -->
+    <div class="room" id="room-listening">
+      <button class="back-btn">← volver</button>
+      <h2 class="room-title">Listen</h2>
+      <div class="room-scene">
+        <div class="hidden-object" id="object-listening" data-name="Melodía">
+          <img class="room-photo-img" src="SEGUROMEDICOJAJAJA.png" alt="Melodía">
+        </div>
+        <div class="hidden-object" id="object-player" data-name="Reproductor">
+          <img class="room-photo-img" src="mp3.png" alt="Reproductor">
+        </div>
+      </div>
+      <audio id="bg-audio" src="Syd Matters - To All of You - Syd matters.mp3" loop preload="auto"></audio>
+    </div>
+
+    <!-- HABITACIÓN: PHOTO -->
+    <div class="room" id="room-photo">
+      <button class="back-btn">← volver</button>
+      <h2 class="room-title">Photo</h2>
+
+      <div class="photo-row">
+        <div class="photo-item"><img src="lenguitawowo.jpeg" alt="Foto 1"></div>
+        <div class="photo-item"><img src="medusasss.jpeg" alt="Foto 2"></div>
+        <div class="photo-item"><img src="labooo.jpeg" alt="Foto 3"></div>
+        <div class="photo-item"><img src="botelladeaguaaa.jpeg" alt="Foto 4"></div>
+        <div class="photo-item"><img src="grabacionwowo.jpeg" alt="Foto 5"></div>
+      </div>
+
+      <div class="room-scene">
+        <div class="hidden-object" id="object-photo" data-name="Recuerdo">
+          <img class="room-photo-img" src="SN74LS08N.png" alt="Circuitoo">
+        </div>
+      </div>
+
+      <p class="room-caption">Siempre me divierto muchito contigoooo</p>
+    </div>
+
+    <!-- HABITACIÓN: SPEAK -->
+    <div class="room" id="room-speak">
+      <button class="back-btn">← volver</button>
+      <h2 class="room-title">Speak</h2>
+      <div class="room-scene">
+        <div class="hidden-object" id="object-speak" data-name="Palabras">
+          <img class="room-photo-img" src="DiscoDurowow.png" alt="DiscoDurowow">
+        </div>
+        <p class="scene-text">Feliz cumple Almaaa♡<br>
+          Queria decirte que todo estos mesistos que nos hicimos más amigos la pase super bien, 
+          adoro pasar tiempo contigo y siempre me haces reir con todo lo que haces, eres una 
+          gran amiga y siempre voy a estar ahí contigo para lo que necesites<br>
+          TE QUIERO MUCHOOO ♡
+        </p>
+      </div>
+
+    <!-- HABITACIÓN: CIRCULO (puerta final) -->
+    <div class="room" id="room-circle">
+      <button class="back-btn">← volver</button>
+      <h2 class="room-title">YEEEY</h2>
+      <p class="room-caption" id="circle-status">Encontraste todos los objetos :D</p>
+      <button id="open-door-btn">Abrir regalo</button>
+    </div>
+
+    <!-- FLASH BLANCO -->
+    <div id="white-flash"></div>
+
+    <!-- SORPRESA FINAL -->
+    <div id="final-screen">
+      <h1>✧</h1>
+      <p class="final-text">Adivina quien tiene los 5 capitulos de Life is Strange???</p>
+      <p class="final-subtext">Muejeje</p>
+    </div>
+
+    <!-- popup "guardado en inventario" -->
+    <div id="inventory-popup" hidden>
+      <span id="inventory-popup-text"></span>
+    </div>
+    <!-- popup "Reproductor"-->
+    <div id="retro-player" hidden>
+      <div class="retro-screen">
+        <span id="retro-track-name">▶ TO ALL OF YOU</span>
+      </div>
+      <div class="retro-reels">
+        <div class="reel"></div>
+        <div class="reel"></div>
+      </div>
+      <button id="retro-toggle-btn">⏸</button>
+      <input type="range" id="retro-volume" min="0" max="1" step="0.05" value="0.5">
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
